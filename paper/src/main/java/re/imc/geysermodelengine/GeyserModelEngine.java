@@ -4,7 +4,6 @@ import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIPaperConfig;
-import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,9 +32,9 @@ public class GeyserModelEngine extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
-        PacketEvents.getAPI().load();
-
+        // PacketEvents は内蔵（shade）せず、サーバー導入済みのスタンドアロン版
+        // （packetevents プラグイン）が setAPI/load 済みの共有 API を使う。
+        // （paper-plugin.yml の dependencies: packetevents required によりロード順が保証される）
         CommandAPI.onLoad(new CommandAPIPaperConfig(this));
         preLoadManagers();
     }
@@ -57,12 +56,12 @@ public class GeyserModelEngine extends JavaPlugin {
     public void onDisable() {
         this.modelManager.removeEntities();
 
-        PacketEvents.getAPI().terminate();
+        // 共有 PacketEvents の terminate は本体プラグインに任せる（他プラグインも使用中のため呼ばない）
         CommandAPI.onDisable();
     }
 
     private void loadHooks() {
-        PacketEvents.getAPI().init();
+        // 共有 PacketEvents はスタンドアロン版が init 済みのため、ここでの init は不要
         FloodgateAPIHook.loadHook(this);
         CommandAPI.onEnable();
     }

@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff2e9770-ec88-4715-adeb-b9dbda130e1a" name="Changes" comment="">
+    <list default="true" id="ff2e9770-ec88-4715-adeb-b9dbda130e1a" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/managers/model/EntityTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/managers/model/EntityTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/managers/model/taskshandler/ModelEngineTaskHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/managers/model/taskshandler/ModelEngineTaskHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paper/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/paper/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/GeyserModelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/paper/src/main/java/re/imc/geysermodelengine/GeyserModelEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,19 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="C:\Users\xsqui\.gradle\wrapper\dists\gradle-9.2.0-bin\11i5gvueggl8a5cioxuftxrik\gradle-9.2.0" javaHome="C:\Program Files\Java\jdk-21.0.10" gradleVersion="9.2.0" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sorandno&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sorandno/GeyserModelEngineFix&quot;,
+    &quot;accountId&quot;: &quot;fcd75a6e-4751-4429-94a1-9a5d5efff412&quot;
+  }
+}</component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="C:\Users\soran\.gradle\wrapper\dists\gradle-9.5.0-bin\bvnork1r7n8i6kp5cnkibsc9q\gradle-9.5.0" javaHome="C:\Users\soran\.jdks\corretto-21.0.11" gradleVersion="9.5.0" />
   <component name="MavenRunner">
     <option name="delegateBuildToMaven" value="true" />
   </component>
@@ -93,6 +107,7 @@
     &quot;Gradle.GeyserModelEngine [build].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.GeyserModelEngine [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.GeyserModelEngine [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GeyserModelEngineFix [clean build].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Upgrade Gradle wrapper.executor&quot;: &quot;Run&quot;,
     &quot;Maven.GeyserModelEngine [install...].executor&quot;: &quot;Run&quot;,
     &quot;Maven.GeyserModelEngine [install].executor&quot;: &quot;Run&quot;,
@@ -126,7 +141,7 @@
       <recent name="D:\Coding\Forks\Minecraft\GeyserModelEngine\libs" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.GeyserModelEngine [build]">
+  <component name="RunManager" selected="Gradle.GeyserModelEngineFix [clean build]">
     <configuration name="GeyserModelEngine [:geyser:build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -182,7 +197,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -252,6 +267,40 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
+    <configuration name="GeyserModelEngineFix [clean build]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--refresh-dependencies" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.GeyserModelEngineFix [clean build]" />
+      <item itemvalue="Gradle.GeyserModelEngine [:geyser:build]" />
+      <item itemvalue="Gradle.GeyserModelEngine [assemble]" />
+      <item itemvalue="Gradle.GeyserModelEngine [build]" />
+      <item itemvalue="Gradle.GeyserModelEngine [clean]" />
+      <item itemvalue="Gradle.GeyserModelEngine [jar]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.GeyserModelEngine [build]" />
@@ -261,6 +310,13 @@
         <item itemvalue="Gradle.GeyserModelEngine [clean]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

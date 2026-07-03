@@ -30,7 +30,10 @@ dependencies {
     compileOnly(files("libs/geyserutils-spigot-1.0-SNAPSHOT.jar"))
     compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")
 
-    implementation("com.github.retrooper:packetevents-spigot:2.12.1")
+    // PacketEvents は内蔵（shade）せず、サーバー導入済みのスタンドアロン版
+    // （packetevents-spigot プラグイン 2.12.1）を共有する。paper-plugin.yml の required 依存で保証。
+    // → 接続パイプラインに複数バージョンの PacketEvents が並ぶ問題を解消する。
+    compileOnly("com.github.retrooper:packetevents-spigot:2.12.1")
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     implementation("org.reflections:reflections:0.10.2")
@@ -49,8 +52,7 @@ tasks.shadowJar {
 
     relocate("dev.jorel.commandapi", "re.imc.geysermodelengine.libs.commandapi")
 
-    relocate("com.github.retrooper", "re.imc.geysermodelengine.libs.com.github.retrooper.packetevents")
-    relocate("io.github.retrooper", "re.imc.geysermodelengine.libs.io.github.retrooper.packetevents")
+    // PacketEvents の relocate は削除（compileOnly 化によりスタンドアロン版のクラスをそのまま使う）
 
     relocate("org.bstats", "re.imc.geysermodelengine.libs.bstats")
 
