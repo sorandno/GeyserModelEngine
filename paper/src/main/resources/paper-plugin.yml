@@ -10,15 +10,22 @@ authors:
 
 load: STARTUP
 
+# load: BEFORE = 依存プラグインが本プラグインより先にロードされる。
+# デフォルトの OMIT は順序未定義のため、起動時に API を使う依存には BEFORE を明示する。
 dependencies:
   server:
     GeyserUtils:
+      load: BEFORE
       required: true
     packetevents:
+      load: BEFORE
       required: true
     floodgate:
+      load: BEFORE
       required: false
     ModelEngine:
+      load: BEFORE
       required: false
     BetterModel:
+      load: BEFORE
       required: false

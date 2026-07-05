@@ -28,8 +28,8 @@ public class UpdateTaskRunnable implements Runnable {
                 });
             }
         } catch (Throwable err) {
+            // scheduleAtFixedRate は例外を投げるとタスクが恒久停止するため、ログのみで継続する
             err.printStackTrace();
-            throw new RuntimeException(err);
         }
     }
 }

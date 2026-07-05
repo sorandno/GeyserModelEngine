@@ -38,7 +38,12 @@ public class ModelListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!BedrockUtils.isBedrockPlayer(player)) return;
-        Bukkit.getGlobalRegionScheduler().runDelayed(plugin, scheduledTask -> plugin.getModelManager().getPlayerJoinedCache().add(player.getUniqueId()), 20);
+        // 遅延中に退出した場合に古いUUIDがキャッシュへ残らないようオンライン確認する
+        Bukkit.getGlobalRegionScheduler().runDelayed(plugin, scheduledTask -> {
+            if (player.isOnline()) {
+                plugin.getModelManager().getPlayerJoinedCache().add(player.getUniqueId());
+            }
+        }, 20);
     }
 
     @EventHandler

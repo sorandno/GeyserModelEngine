@@ -20,7 +20,8 @@ public class ModelManager {
 
     private ModelHandler modelHandler;
 
-    private final HashSet<UUID> playerJoinedCache = new HashSet<>();
+    // 非同期タスク（BedrockMountControlRunnable）から走査されるため並行対応セットにする
+    private final Set<UUID> playerJoinedCache = ConcurrentHashMap.newKeySet();
 
     private final ConcurrentHashMap<Integer, Model> modelEntitiesCache = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, Map<Model, EntityData>> entitiesCache = new ConcurrentHashMap<>();
@@ -56,7 +57,7 @@ public class ModelManager {
         return modelHandler;
     }
 
-    public HashSet<UUID> getPlayerJoinedCache() {
+    public Set<UUID> getPlayerJoinedCache() {
         return playerJoinedCache;
     }
 

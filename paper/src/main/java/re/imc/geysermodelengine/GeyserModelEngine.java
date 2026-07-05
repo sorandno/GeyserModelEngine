@@ -34,7 +34,7 @@ public class GeyserModelEngine extends JavaPlugin {
     public void onLoad() {
         // PacketEvents は内蔵（shade）せず、サーバー導入済みのスタンドアロン版
         // （packetevents プラグイン）が setAPI/load 済みの共有 API を使う。
-        // （paper-plugin.yml の dependencies: packetevents required によりロード順が保証される）
+        // （paper-plugin.yml の dependencies: packetevents に load: BEFORE を指定してロード順を保証）
         CommandAPI.onLoad(new CommandAPIPaperConfig(this));
         preLoadManagers();
     }
@@ -54,6 +54,10 @@ public class GeyserModelEngine extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // 非デーモンスレッドのプールを止めないとリロード後もタスクが走り続ける
+        if (this.schedulerPool != null) {
+            this.schedulerPool.shutdownNow();
+        }
         this.modelManager.removeEntities();
 
         // 共有 PacketEvents の terminate は本体プラグインに任せる（他プラグインも使用中のため呼ばない）

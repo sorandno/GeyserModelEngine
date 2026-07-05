@@ -10,7 +10,6 @@ import com.ticxo.modelengine.api.model.bone.type.Mount;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.geysermc.floodgate.api.FloodgateApi;
 import re.imc.geysermodelengine.GeyserModelEngine;
 import re.imc.geysermodelengine.util.BedrockUtils;
 
@@ -27,7 +26,7 @@ public class MountPacketListener implements PacketListener {
         if (event.getPacketType() != PacketType.Play.Client.ENTITY_ACTION) return;
 
         Player player = Bukkit.getPlayer(event.getUser().getUUID());
-        if (!BedrockUtils.isBedrockPlayer(player)) return;
+        if (player == null || !BedrockUtils.isBedrockPlayer(player)) return;
 
         WrapperPlayClientEntityAction action = new WrapperPlayClientEntityAction(event);
         Pair<ActiveModel, Mount> seat = plugin.getModelManager().getDriversCache().get(player.getUniqueId());
