@@ -2,6 +2,7 @@ package re.imc.geysermodelengineextension.managers.resourcepack;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import re.imc.geysermodelengineextension.GeyserModelEngineExtension;
@@ -59,6 +60,28 @@ public class ResourcePackManager {
         }
     }
 
+    private int nextPackVersion() {
+        Path versionPath = extension.dataFolder().resolve("pack_version.txt");
+        // Start well above the old hardcoded "1" version every pack was shipped with before this
+        // fix, so the very first restart after upgrading is guaranteed to produce a version that
+        // differs from whatever Bedrock clients already have cached under the same pack uuid.
+        int version = 999;
+        try {
+            if (Files.exists(versionPath)) {
+                version = Integer.parseInt(Files.readString(versionPath).trim());
+            }
+        } catch (IOException | NumberFormatException ignored) {
+        }
+
+        version++;
+        try {
+            Files.writeString(versionPath, String.valueOf(version), StandardCharsets.UTF_8);
+        } catch (IOException err) {
+            throw new RuntimeException(err);
+        }
+        return version;
+    }
+
     private void generateResourcePack(File inputFolder, File output) {
         generateFromFolder("", inputFolder, true);
 
@@ -75,18 +98,40 @@ public class ResourcePackManager {
         File manifestFile = new File(output, "manifest.json");
 
         output.mkdirs();
-        if (!manifestFile.exists()) {
-            try {
-                JsonObject packManifestObject = extension.getConfigManager().getResourcePackTemplatesCache().get("packmanifest");
-
-                String packManifestString = GSON.toJson(packManifestObject)
-                        .replace("%uuid-1%", UUID.randomUUID().toString())
-                        .replace("%uuid-2%", UUID.randomUUID().toString());
-
-                Files.writeString(manifestFile.toPath(), packManifestString, StandardCharsets.UTF_8);
-            } catch (IOException err) {
-                throw new RuntimeException(err);
+        try {
+            // Bedrock clients cache a resource pack by its (uuid, version) pair, so the uuids
+            // must stay stable across restarts, but the version must change every time the pack
+            // is (re)generated - otherwise clients that already cached this uuid keep using their
+            // stale copy forever, even after the pack content changes on the server.
+            String uuid1 = null;
+            String uuid2 = null;
+            if (manifestFile.exists()) {
+                try {
+                    JsonObject existing = JsonParser.parseString(Files.readString(manifestFile.toPath())).getAsJsonObject();
+                    uuid1 = existing.getAsJsonObject("header").get("uuid").getAsString();
+                    uuid2 = existing.getAsJsonArray("modules").get(0).getAsJsonObject().get("uuid").getAsString();
+                } catch (Exception ignored) {
+                }
             }
+            if (uuid1 == null) uuid1 = UUID.randomUUID().toString();
+            if (uuid2 == null) uuid2 = UUID.randomUUID().toString();
+
+            JsonArray version = new JsonArray();
+            version.add(0);
+            version.add(0);
+            version.add(nextPackVersion());
+
+            JsonObject packManifestObject = extension.getConfigManager().getResourcePackTemplatesCache().get("packmanifest").deepCopy();
+            JsonObject header = packManifestObject.getAsJsonObject("header");
+            header.addProperty("uuid", uuid1);
+            header.add("version", version);
+            JsonObject module = packManifestObject.getAsJsonArray("modules").get(0).getAsJsonObject();
+            module.addProperty("uuid", uuid2);
+            module.add("version", version);
+
+            Files.writeString(manifestFile.toPath(), GSON.toJson(packManifestObject), StandardCharsets.UTF_8);
+        } catch (IOException err) {
+            throw new RuntimeException(err);
         }
 
         animationsFolder.mkdirs();
