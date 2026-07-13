@@ -62,7 +62,7 @@ public class ResourcePackManager {
     }
 
     // Bedrock クライアントが 3D テクスチャを表示できたりできなかったりする不具合対策。
-    // 無効化時に生成済みパックを削除しておき、次回起動時に必ずゼロから再生成させる。
+    // 起動時にこれを呼んでから loadPack() することで、必ずゼロから再生成させる。
     public void deleteGeneratedPack() {
         FileUtils.deleteDirectory(extension.dataFolder().resolve("ResourcePack").toFile());
     }

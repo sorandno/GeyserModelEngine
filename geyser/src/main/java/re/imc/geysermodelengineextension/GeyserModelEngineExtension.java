@@ -6,7 +6,6 @@ import org.geysermc.geyser.api.command.CommandSource;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCommandsEvent;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineResourcePacksEvent;
 import org.geysermc.geyser.api.event.lifecycle.GeyserPreInitializeEvent;
-import org.geysermc.geyser.api.event.lifecycle.GeyserShutdownEvent;
 import org.geysermc.geyser.api.extension.Extension;
 import org.geysermc.geyser.api.pack.PackCodec;
 import org.geysermc.geyser.api.pack.ResourcePack;
@@ -27,12 +26,12 @@ public class GeyserModelEngineExtension implements Extension {
 
         loadManagers();
 
+        // Bedrock が 3D テクスチャを表示できたりできなかったりする不具合対策。
+        // GeyserShutdownEvent は環境によっては発火しない(拡張が既にイベントバスから
+        // 外れた後に発火する等)ため、シャットダウン時ではなく起動のたびに古い生成物を
+        // 消してゼロから作り直すことで確実に反映させる。
+        resourcePackManager.deleteGeneratedPack();
         resourcePackManager.loadPack();
-    }
-
-    @Subscribe
-    public void onShutdown(GeyserShutdownEvent event) {
-        if (resourcePackManager != null) resourcePackManager.deleteGeneratedPack();
     }
 
     @Subscribe
